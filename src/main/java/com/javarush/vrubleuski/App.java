@@ -1,5 +1,6 @@
 package com.javarush.vrubleuski;
 
+import com.javarush.vrubleuski.entity.Address;
 import com.javarush.vrubleuski.entity.Film;
 import org.hibernate.Session;
 
@@ -12,11 +13,12 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
         try (Session session = MySessionFactory.getSessionFactory().openSession()) {
-            List<Film> films = session
+            List<Address> films = session
                     .createQuery("""
-                            FROM Film f
-                            """, Film.class).list();
+                            FROM Address f
+                            """, Address.class).list();
             System.out.println(films);
         }
     }
+
 }

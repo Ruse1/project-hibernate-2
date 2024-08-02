@@ -28,6 +28,9 @@ public class MySessionFactory {
                 .addAnnotatedClass(Category.class)
                 .addAnnotatedClass(Actor.class)
                 .addAnnotatedClass(Language.class)
+                .addAnnotatedClass(Address.class)
+                .addAnnotatedClass(City.class)
+                .addAnnotatedClass(Country.class)
                 .buildSessionFactory();
     }
 
