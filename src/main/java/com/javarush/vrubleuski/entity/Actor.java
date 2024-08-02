@@ -1,0 +1,39 @@
+package com.javarush.vrubleuski.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@ToString(exclude = "films")
+@Entity
+@Table(name = "actor")
+public class Actor {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "actor_id")
+    private Short id;
+
+    @Column(name = "first_name", length = 45, nullable = false)
+    private String firstName;
+
+    @Column(name = "last_name", length = 45, nullable = false)
+    private String lastName;
+
+    @Column(name = "last_update", nullable = false)
+    private LocalDateTime lastUpdate;
+
+    @ManyToMany
+    @JoinTable(name = "film_actor",
+            joinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "actor_id"),
+            inverseJoinColumns = @JoinColumn(name = "film_id", referencedColumnName = "film_id"))
+    private Set<Film> films = new HashSet<>();
+}
