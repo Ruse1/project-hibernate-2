@@ -31,6 +31,12 @@ public class MySessionFactory {
                 .addAnnotatedClass(Address.class)
                 .addAnnotatedClass(City.class)
                 .addAnnotatedClass(Country.class)
+                .addAnnotatedClass(Staff.class)
+                .addAnnotatedClass(Store.class)
+                .addAnnotatedClass(Rental.class)
+                .addAnnotatedClass(Payment.class)
+                .addAnnotatedClass(Inventory.class)
+                .addAnnotatedClass(Customer.class)
                 .buildSessionFactory();
     }
 
