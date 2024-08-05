@@ -2,6 +2,8 @@ package com.javarush.vrubleuski.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SourceType;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +24,7 @@ public class Language {
     @Column(name = "name", length = 20, nullable = false)
     private String name;
 
+    @UpdateTimestamp(source = SourceType.DB)
     @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
 }

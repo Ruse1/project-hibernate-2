@@ -5,7 +5,7 @@ public enum Rating {
     PG("PG"),
     PG13("PG-13"),
     R("R"),
-    NC17("N-17");
+    NC17("NC-17");
 
     private String name;
 

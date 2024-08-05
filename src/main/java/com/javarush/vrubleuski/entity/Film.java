@@ -1,7 +1,10 @@
 package com.javarush.vrubleuski.entity;
 
+import com.javarush.vrubleuski.converter.RatingConverter;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SourceType;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -46,14 +49,16 @@ public class Film {
     @Column(name = "replacement_cost", nullable = false, precision = 5, scale = 2)
     private BigDecimal replacementCost;
 
+    @Convert(converter = RatingConverter.class)
     @Column(name = "rating")
-    private String rating;
+    private Rating rating;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "film", joinColumns = @JoinColumn(name = "film_id"))
     @Column(name = "special_features")
     private Set<String> specialFeatures;
 
+    @UpdateTimestamp(source = SourceType.DB)
     @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
 
