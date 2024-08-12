@@ -1,9 +1,6 @@
 package com.javarush.vrubleuski.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 
@@ -13,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "film_text")
+@Table(name = "film_text", schema = "movie")
 public class FilmText {
 
     @Id
@@ -23,7 +20,11 @@ public class FilmText {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "text")
     private String description;
+
+    @OneToOne
+    @JoinColumn(name = "film_id")
+    private Film film;
 
 }

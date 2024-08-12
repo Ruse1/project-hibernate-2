@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -14,11 +13,11 @@ import java.util.Set;
 @Getter
 @ToString(exclude = "films")
 @Entity
-@Table(name = "actor")
+@Table(name = "actor", schema = "movie")
 public class Actor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "actor_id")
     private Short id;
 
@@ -31,9 +30,10 @@ public class Actor {
     @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
 
+
     @ManyToMany
     @JoinTable(name = "film_actor",
             joinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "actor_id"),
             inverseJoinColumns = @JoinColumn(name = "film_id", referencedColumnName = "film_id"))
-    private Set<Film> films = new HashSet<>();
+    private Set<Film> films;
 }

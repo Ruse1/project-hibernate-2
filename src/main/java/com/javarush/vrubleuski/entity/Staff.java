@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
-@Table(name = "staff")
+@Table(name = "staff", schema = "movie")
 public class Staff {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "staff_id")
     private Byte id;
 
@@ -26,10 +26,10 @@ public class Staff {
 
     @ManyToOne
     @JoinColumn(name = "address_id")
-    private Address addressStaff;
+    private Address address;
 
     @Lob
-    @Column(name = "picture")
+    @Column(name = "picture", columnDefinition = "blob")
     private Byte[] picture;
 
     @Column(name = "email", length = 50)
@@ -37,10 +37,10 @@ public class Staff {
 
     @ManyToOne
     @JoinColumn(name = "store_id")
-    private Store storeStaff;
+    private Store store;
 
-    @Column(name = "active", nullable = false)
-    private Boolean active;
+    @Column(name = "active", nullable = false, columnDefinition = "tinyint(1)")
+    private Boolean isActive;
 
     @Column(name = "username", length = 16, nullable = false)
     private String username;

@@ -2,7 +2,6 @@ package com.javarush.vrubleuski.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
@@ -17,14 +16,14 @@ import java.time.LocalDateTime;
 public class Language {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "language_id", nullable = false)
     private Byte id;
 
-    @Column(name = "name", length = 20, nullable = false)
+    @Column(name = "name", length = 20, nullable = false, columnDefinition = "char")
     private String name;
 
-    @UpdateTimestamp(source = SourceType.DB)
+    @UpdateTimestamp
     @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
 }

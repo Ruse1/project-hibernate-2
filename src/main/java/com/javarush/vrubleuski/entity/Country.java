@@ -2,7 +2,6 @@ package com.javarush.vrubleuski.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
@@ -13,18 +12,17 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @Entity
-@Table(name = "country")
+@Table(name = "country", schema = "movie")
 public class Country {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "country_id")
     private Short id;
 
     @Column(name = "country", length = 50, nullable = false)
-    private String country;
+    private String name;
 
-    @UpdateTimestamp(source = SourceType.DB)
+    @UpdateTimestamp
     @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
 }

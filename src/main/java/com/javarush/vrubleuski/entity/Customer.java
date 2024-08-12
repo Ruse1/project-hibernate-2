@@ -3,7 +3,6 @@ package com.javarush.vrubleuski.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
@@ -13,12 +12,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString(exclude = {"store", "addressCustomer"})
+@ToString(exclude = {"store", "address"})
 @Entity
-@Table(name = "customer")
+@Table(name = "customer", schema = "movie")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
     private Short id;
 
@@ -37,16 +36,16 @@ public class Customer {
 
     @OneToOne
     @JoinColumn(name = "address_id")
-    private Address addressCustomer;
+    private Address address;
 
-    @Column(name = "active", nullable = false)
-    private Boolean active;
+    @Column(name = "active", nullable = false, columnDefinition = "tinyint(1)")
+    private Boolean isActive;
 
     @CreationTimestamp
-    @Column(name = "create_date", nullable = false)
+    @Column(name = "create_date", nullable = false, columnDefinition = "datetime")
     private LocalDate createDate;
 
-    @UpdateTimestamp(source = SourceType.DB)
+    @UpdateTimestamp
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
 }

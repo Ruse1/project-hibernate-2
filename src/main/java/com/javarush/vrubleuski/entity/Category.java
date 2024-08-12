@@ -13,22 +13,22 @@ import java.util.Set;
 @Getter
 @ToString(exclude = "films")
 @Entity
-@Table(name = "category")
+@Table(name = "category", schema = "movie")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private Byte id;
 
     @Column(name = "name", length = 25, nullable = false)
     private String name;
 
-    @Column(name = "last_update",nullable = false)
+    @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
 
     @ManyToMany
     @JoinTable(name = "film_category",
-    joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "category_id"),
-    inverseJoinColumns = @JoinColumn(name = "film_id", referencedColumnName = "film_id"))
+            joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "film_id", referencedColumnName = "film_id"))
     private Set<Film> films = new HashSet<>();
 }

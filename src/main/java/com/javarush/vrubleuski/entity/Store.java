@@ -1,9 +1,7 @@
 package com.javarush.vrubleuski.entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
@@ -14,10 +12,10 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
-@Table(name = "store")
+@Table(name = "store", schema = "movie")
 public class Store {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "store_id")
     private Byte id;
 
@@ -27,9 +25,9 @@ public class Store {
 
     @OneToOne
     @JoinColumn(name = "address_id")
-    private Address addressStore;
+    private Address address;
 
-    @UpdateTimestamp(source = SourceType.DB)
+    @UpdateTimestamp
     @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
 }

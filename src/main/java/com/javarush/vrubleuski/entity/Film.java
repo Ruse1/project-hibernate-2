@@ -3,12 +3,11 @@ package com.javarush.vrubleuski.entity;
 import com.javarush.vrubleuski.converter.RatingConverter;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
+import java.time.Year;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -17,25 +16,29 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
-@Table(name = "film", schema = "project_hibernate_2")
+@Table(name = "film", schema = "movie")
 public class Film {
-    @Id()
+    @Id
     @Column(name = "film_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Short id;
 
     @Column(name = "title", nullable = false, length = 128)
     private String title;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @Column(name = "release_year")
-    private Integer releaseYear;
+    @Column(name = "release_year", columnDefinition = "year")
+    private Year releaseYear;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "language_id")
     private Language language;
+
+    @ManyToOne
+    @JoinColumn(name = "original_language_id")
+    private Language originalLanguage;
 
     @Column(name = "rental_duration", nullable = false)
     private Byte rentalDuration;
@@ -50,32 +53,28 @@ public class Film {
     private BigDecimal replacementCost;
 
     @Convert(converter = RatingConverter.class)
-    @Column(name = "rating")
+    @Column(name = "rating", columnDefinition = "enum('G', 'PG', 'PG-13', 'R', 'NC-17')")
     private Rating rating;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "film", joinColumns = @JoinColumn(name = "film_id"))
-    @Column(name = "special_features")
+    @Column(name = "special_features", columnDefinition = "set('Trailers', 'Commentaries', 'Deleted Scenes', 'Behind the Scenes')")
     private Set<String> specialFeatures;
 
-    @UpdateTimestamp(source = SourceType.DB)
+    @UpdateTimestamp
     @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "film_id")
-    private FilmText filmText;
 
     @ManyToMany
     @JoinTable(name = "film_category",
             joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "category_id"))
-    private Set<Category> categories = new HashSet<>();
+    private Set<Category> categories;
 
     @ManyToMany
     @JoinTable(name = "film_actor",
             joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "actor_id"))
-    private Set<Actor> actors = new HashSet<>();
+    private Set<Actor> actors;
 
 }

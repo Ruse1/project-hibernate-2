@@ -7,7 +7,7 @@ public enum Rating {
     R("R"),
     NC17("NC-17");
 
-    private String name;
+    private final String name;
 
     Rating(String name) {
         this.name = name;

@@ -1,7 +1,6 @@
 package com.javarush.vrubleuski;
 
-import com.javarush.vrubleuski.entity.Address;
-import com.javarush.vrubleuski.entity.Film;
+import com.javarush.vrubleuski.entity.*;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -12,12 +11,17 @@ import java.util.List;
  */
 public class App {
     public static void main(String[] args) {
-        try (Session session = MySessionFactory.getSessionFactory().openSession()) {
-            List<Address> films = session
+        try (Session session = SessionFactory.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            List<Film> films = session
                     .createQuery("""
-                            FROM Address f
-                            """, Address.class).list();
-            System.out.println(films);
+                            FROM Film f
+                            WHERE f.id = 2
+                            """, Film.class).list();
+//            Film film = films.get(0);
+//            film.setRating(Rating.NC17);
+            System.out.println(films.get(0));
+            session.getTransaction().commit();
         }
     }
 

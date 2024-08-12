@@ -12,10 +12,10 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
-@Table(name = "rental")
+@Table(name = "rental", schema = "movie")
 public class Rental {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rental_id")
     private Integer id;
 
@@ -25,18 +25,18 @@ public class Rental {
 
     @ManyToOne
     @JoinColumn(name = "inventory_id")
-    private Inventory inventoryRental;
+    private Inventory inventory;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customer customerRental;
-
-    @ManyToOne
-    @JoinColumn(name = "staff_id")
-    private Staff staffRental;
+    private Customer customer;
 
     @Column(name = "return_date", nullable = false)
     private LocalDateTime returnDate;
+
+    @ManyToOne
+    @JoinColumn(name = "staff_id")
+    private Staff staff;
 
     @UpdateTimestamp
     @Column(name = "last_update", nullable = false)
