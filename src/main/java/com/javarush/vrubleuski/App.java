@@ -11,17 +11,43 @@ import java.util.List;
  */
 public class App {
     public static void main(String[] args) {
-        try (Session session = SessionFactory.getSessionFactory().openSession()) {
+        try (Session session = MySessionFactory.getSessionFactory().openSession()) {
             session.beginTransaction();
-            List<Film> films = session
-                    .createQuery("""
-                            FROM Film f
-                            WHERE f.id = 2
-                            """, Film.class).list();
-//            Film film = films.get(0);
-//            film.setRating(Rating.NC17);
-            System.out.println(films.get(0));
-            session.getTransaction().commit();
+
+            try {
+                Country country = new Country();
+                country.setName("Belarus");
+
+                session.persist(country);
+
+                City city = new City();
+                city.setName("Minsk");
+                city.setCountry(country);
+
+                session.persist(city);
+
+                Address address = new Address();
+                address.setAddress("Beleckogo18");
+                address.setDistrict("Mockovski");
+                address.setCity(city);
+                address.setPostal_code("222222");
+                address.setPhone("6628762");
+
+                session.persist(address);
+
+                Customer customer = new Customer();
+                customer.setFirstName("Ruslan");
+                customer.setLastName("Vrubleuski");
+                customer.setEmail("6628762@mail.ru");
+                customer.setIsActive(true);
+                customer.setAddress(address);
+
+                session.persist(customer);
+
+                session.getTransaction().commit();
+            } catch (Exception e) {
+                session.getTransaction().rollback();
+            }
         }
     }
 

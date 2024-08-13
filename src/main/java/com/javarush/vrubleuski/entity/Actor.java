@@ -6,7 +6,6 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -29,7 +28,6 @@ public class Actor {
 
     @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
-
 
     @ManyToMany
     @JoinTable(name = "film_actor",
