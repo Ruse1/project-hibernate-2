@@ -9,6 +9,7 @@ import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Setter
 @Getter
 @ToString(exclude = "films")

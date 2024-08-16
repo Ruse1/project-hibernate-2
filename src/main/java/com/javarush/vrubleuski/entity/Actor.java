@@ -6,10 +6,11 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
+@Builder
 @ToString(exclude = "films")
 @Entity
 @Table(name = "actor", schema = "movie")
