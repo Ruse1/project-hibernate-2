@@ -2,8 +2,10 @@ package com.javarush.vrubleuski.dao;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 import java.io.Serializable;
 import java.util.List;
@@ -67,6 +69,15 @@ public abstract class DaoBase<K extends Serializable, E> implements Dao<K, E> {
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .list();
+    }
+    public long getGeneralCount() {
+        Session session = getSessionFactory().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Long> critQuery = builder.createQuery(Long.class);
+        Root<E> from = critQuery.from(clazz);
+        critQuery.select(builder.count(from));
+        Query<Long> query = session.createQuery(critQuery);
+        return query.uniqueResult();
     }
 
     protected Class<E> getClazz() {
