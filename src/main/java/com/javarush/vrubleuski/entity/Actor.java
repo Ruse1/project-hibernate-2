@@ -2,6 +2,7 @@ package com.javarush.vrubleuski.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -27,6 +28,7 @@ public class Actor {
     @Column(name = "last_name", length = 45, nullable = false)
     private String lastName;
 
+    @UpdateTimestamp
     @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
 

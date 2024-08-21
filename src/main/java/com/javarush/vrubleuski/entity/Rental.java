@@ -32,7 +32,7 @@ public class Rental {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @Column(name = "return_date", nullable = false)
+    @Column(name = "return_date")
     private LocalDateTime returnDate;
 
     @ManyToOne

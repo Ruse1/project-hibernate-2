@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
+@ToString(exclude = {"store", "film"})
 @Table(name = "inventory")
 public class Inventory {
     @Id
@@ -21,11 +22,11 @@ public class Inventory {
 
     @ManyToOne
     @JoinColumn(name = "film_id")
-    private Film filmInventory;
+    private Film film;
 
     @ManyToOne
     @JoinColumn(name = "store_id")
-    private Store storeInventory;
+    private Store store;
 
     @UpdateTimestamp
     @Column(name = "last_update", nullable = false)
